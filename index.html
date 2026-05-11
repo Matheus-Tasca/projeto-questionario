@@ -1,181 +1,270 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro - Sthefany</title>
-    <style>
-        :root {
-            --purple-bts: #6c4ab6;
-            --light-pink: #f3e8ff;
-        }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-pink);
-            color: #333;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
 
-        #video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        video {
-            width: 100%;
-            max-width: 800px;
-            border-radius: 10px;
-        }
+<title>Caça ao Tesouro - Sthefany</title>
 
-        .skip-btn {
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid white;
-            color: white;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+<style>
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 350px;
-            width: 100%;
-        }
+:root {
 
-        .pista-img {
-            width: 100%;
-            max-height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border: 2px solid var(--light-pink);
-        }
+--purple-bts: #6c4ab6;
 
-        h1 { color: var(--purple-bts); margin-bottom: 10px; }
-        p { line-height: 1.6; font-size: 1.1em; }
+--light-pink: #f3e8ff;
 
-        input {
-            width: 90%;
-            padding: 12px;
-            margin: 20px 0;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            outline: none;
-        }
+}
 
-        input:focus { border-color: var(--purple-bts); }
 
-        button {
-            background-color: var(--purple-bts);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
 
-        button:active { transform: scale(0.95); }
+body {
 
-        .hidden { display: none !important; }
-        
-        .error-msg { color: red; font-size: 0.9em; margin-top: 10px; }
-    </style>
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+background-color: var(--light-pink);
+
+color: #333;
+
+margin: 0;
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+justify-content: center;
+
+min-height: 100vh;
+
+text-align: center;
+
+padding: 20px;
+
+}
+
+
+
+.card {
+
+background: white;
+
+padding: 30px;
+
+border-radius: 20px;
+
+box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+max-width: 350px;
+
+width: 100%;
+
+}
+
+
+
+/* Estilo para as fotos */
+
+.pista-img {
+
+width: 100%;
+
+max-height: 200px;
+
+object-fit: cover;
+
+border-radius: 10px;
+
+margin-bottom: 15px;
+
+border: 2px solid var(--light-pink);
+
+}
+
+
+
+h1 { color: var(--purple-bts); margin-bottom: 10px; }
+
+p { line-height: 1.6; font-size: 1.1em; }
+
+
+
+input {
+
+width: 90%;
+
+padding: 12px;
+
+margin: 20px 0;
+
+border: 2px solid #ddd;
+
+border-radius: 10px;
+
+font-size: 1rem;
+
+outline: none;
+
+}
+
+
+
+input:focus { border-color: var(--purple-bts); }
+
+
+
+button {
+
+background-color: var(--purple-bts);
+
+color: white;
+
+border: none;
+
+padding: 15px 30px;
+
+border-radius: 10px;
+
+font-size: 1rem;
+
+font-weight: bold;
+
+cursor: pointer;
+
+transition: transform 0.2s;
+
+}
+
+
+
+button:active { transform: scale(0.95); }
+
+
+
+.hidden { display: none; }
+
+
+.success-msg { color: green; font-weight: bold; margin-top: 10px; }
+
+.error-msg { color: red; font-size: 0.9em; margin-top: 10px; }
+
+</style>
+
 </head>
+
 <body>
 
-    <div id="video-overlay">
-        <video id="intro-video" controls autoplay>
-            <source src="seu-video.mp4" type="video/mp4">
-        </video>
-        <button class="skip-btn" onclick="showGame()">Pular Intro</button>
-    </div>
 
-    <div id="game-container" class="card hidden">
-        <div id="screen-intro">
-            <img src="./imagem_home.png" alt="BTS" class="pista-img">
-            <h1>Caça ao Tesouro - Sthefany</h1>
-            <p>Sthefany, rápido! Os meninos do <b>BTS</b> e o <b>Matheus-kun</b> precisam da sua ajuda. Você receberá alguns prêmios muito <b>KWAAII   <br>>.<, </b> mas precisa seguir as pistas e achar eles na casa da <b>Marlene-kun 0.0</b></p>
-            <button onclick="nextStep(1)">COMEÇAR MISSÃO</button>
-        </div>
 
-        <div id="screen-1" class="hidden">
-            <h3>Pista #1</h3>
-            <p>"Parte interior de um objeto de descanso e relaxamento."</p>
-            <input type="text" id="input-1" placeholder="Qual a palavra-chave?">
-            <button onclick="checkAnswer(1, 'Sthefany')">VERIFICAR</button>
-            <p id="error-1" class="error-msg hidden">Palavra incorreta! Tente novamente.</p>
-        </div>
+<div id="game-container" class="card">
 
-        <div id="screen-2" class="hidden">
-            <h3>Pista #2</h3>
-            <p>"Lugar pouco visitado e inacessível da casa (possível morada do chupa-cu)."</p>
-            <input type="text" id="input-2" placeholder="Qual a palavra-chave?">
-            <button onclick="checkAnswer(2, 'Lindinha')">PROSSEGUIR</button>
-            <p id="error-2" class="error-msg hidden">Ainda não é isso...</p>
-        </div>
+<div id="screen-intro">
 
-        <div id="screen-3" class="hidden">
-            <h3>Pista Final</h3>
-            <p>"Morada de um ser estranho e preto (não é a Giovanna nem a Anne)."</p>
-            <p><i>Procure bem, o presente final está lá!</i></p>
-        </div>
-    </div>
+<img src="./imagem_home.png" alt="BTS" class="pista-img">
 
-    <script>
-        const video = document.getElementById('intro-video');
-        
-        video.onended = function() {
-            showGame();
-        };
+<h1>Caça ao Tesouro - Sthefany</h1>
 
-        function showGame() {
-            document.getElementById('video-overlay').classList.add('hidden');
-            document.getElementById('game-container').classList.remove('hidden');
-            video.pause();
-        }
+<p>Sthefany, rápido! Os meninos do <b>BTS</b> e o <b>Matheus-kun</b> precisam da sua ajuda. Você receberá alguns prêmios muito <b>KWAAII >.< </b> mas precisa seguir as pistas e achar eles na casa da <b>Marlene-kun 0.0</b></p>
 
-        function nextStep(step) {
-            document.getElementById('screen-intro').classList.add('hidden');
-            document.getElementById('screen-' + step).classList.remove('hidden');
-        }
+<button onclick="nextStep(1)">COMEÇAR MISSÃO</button>
 
-        function checkAnswer(currentStep, correct) {
-            const input = document.getElementById('input-' + currentStep).value;
-            const error = document.getElementById('error-' + currentStep);
+</div>
 
-            if (input.trim().toLowerCase() === correct.toLowerCase()) {
-                document.getElementById('screen-' + currentStep).classList.add('hidden');
-                document.getElementById('screen-' + (currentStep + 1)).classList.remove('hidden');
-            } else {
-                error.classList.remove('hidden');
-            }
-        }
-    </script>
+
+
+<div id="screen-1" class="hidden">
+
+<img alt="Pista 1" class="pista-img">
+
+<h3>Pista #1</h3>
+
+<p>"Parte interior de um objeto de descanso e relaxamento."</p>
+
+<input type="text" id="input-1" placeholder="Qual a palavra-chave?">
+
+<button onclick="checkAnswer(1, 'Sthefany')">VERIFICAR</button>
+
+<p id="error-1" class="error-msg hidden">Palavra incorreta! Tente novamente.</p>
+
+</div>
+
+
+
+<div id="screen-2" class="hidden">
+
+<img alt="Pista 2" class="pista-img">
+
+<h3>Pista #2</h3>
+
+<p>"Lugar pouco visitado e inacessível da casa (possível morada do chupa-cu)."</p>
+
+<input type="text" id="input-2" placeholder="Qual a palavra-chave?">
+
+<button onclick="checkAnswer(2, 'Lindinha')">PROSSEGUIR</button>
+
+<p id="error-2" class="error-msg hidden">Ainda não é isso...</p>
+
+</div>
+
+
+
+<div id="screen-3" class="hidden">
+
+<img alt="Parabéns" class="pista-img">
+
+<h3>Pista Final</h3>
+
+<p>"Morada de um ser estranho e preto (não é a Giovanna nem a Anne)."</p>
+
+<p><i>Procure bem, o presente final está lá!</i></p>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+function nextStep(step) {
+
+document.getElementById('screen-intro').classList.add('hidden');
+
+document.getElementById('screen-' + step).classList.remove('hidden');
+
+}
+
+
+
+function checkAnswer(currentStep, correct) {
+
+const input = document.getElementById('input-' + currentStep).value;
+
+const error = document.getElementById('error-' + currentStep);
+
+
+
+if (input.trim().toLowerCase() === correct.toLowerCase()) {
+
+document.getElementById('screen-' + currentStep).classList.add('hidden');
+
+document.getElementById('screen-' + (currentStep + 1)).classList.remove('hidden');
+
+} else {
+
+error.classList.remove('hidden');
+
+}
+
+}
+
+</script>
+
 </body>
+
 </html>
